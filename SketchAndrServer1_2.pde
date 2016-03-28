@@ -1,9 +1,6 @@
 import java.net.HttpURLConnection;
 import java.io.*;
 import java.net.*;
-import android.view.WindowManager;
-import android.view.View;
-
 
 String data;
 String lines[];
@@ -13,13 +10,6 @@ String str="";
 int MX=0, MY=0;
 int stroke1 = 3;
 int x=0, y=0, p=0, q=0, r=0, g=0, b=0, stroke=1;
-
-void onCreate(Bundle bundle) 
-{
-  super.onCreate(bundle);
-  // fix so screen doesn't go to sleep when app is active
-  getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-}
 
 void setup(){
 
@@ -48,7 +38,9 @@ void draw(){
 
 void write_file(){
   try{
-        URL oracle = new URL("http://192.168.0.114/index.php?x="+mouseX+"&y="+mouseY+"&px="+pmouseX+"&py="+pmouseY+"&st="+stroke);
+       // URL oracle = new URL("http://192.168.0.114/index.php?x="+mouseX+"&y="+mouseY+"&px="+pmouseX+"&py="+pmouseY+"&st="+stroke);
+        URL oracle = new URL("http://"+Server.ip()+"/index.php?x="+mouseX+"&y="+mouseY+"&px="+pmouseX+"&py="+pmouseY+"&st="+stroke);
+
         BufferedReader in = new BufferedReader(
         new InputStreamReader(oracle.openStream()));
         in.close();
@@ -59,7 +51,9 @@ void write_file(){
 }
 
 void read_file(){
-  lines = loadStrings("http://192.168.0.114/Cata.txt");
+//  lines = loadStrings("http://192.168.0.114/Cata.txt");
+    lines = loadStrings("http://"+Server.ip()+"/Cata.txt");
+
   //  lines = loadStrings("C:\\Users\\UCSC_UAV\\Documents\\Processing\\workspace\\SketchPadServer\\Data.txt");
   if(lines.length >= 1){
     for(int inc=0; inc < lines.length; inc++){
@@ -77,6 +71,7 @@ void read_file(){
         strokeWeight(stroke1);
         stroke(r,g,b);
         line(x,y,p,q);
+        println(stroke1);
     }
     }
   }
